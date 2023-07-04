@@ -21,10 +21,17 @@
             color: #e4606d
         }
 
-        .chat-messages {
+        .contacts {
             display: flex;
             flex-direction: column;
             max-height: 800px;
+            overflow-y: scroll
+        }
+
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            max-height: 700px;
             overflow-y: scroll
         }
 
@@ -69,7 +76,7 @@
             <h1 class="h3 mb-3">Messages</h1>
             <div class="card">
                 <div class="row g-0">
-                    <div class="col-12 col-lg-5 col-xl-3 border-right">
+                    <div class="col-12 col-lg-5 col-xl-3 border-right contacts">
                         <div class="px-4 d-none d-md-block">
                             <div class="d-flex align-items-center">
                                 <div class="flex-grow-1">
@@ -78,6 +85,66 @@
                             </div>
                         </div>
                         <a href="#" class="list-group-item list-group-item-action border-0">
+                            <div class="badge bg-success float-right">5</div>
+                            <div class="d-flex align-items-start">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                    class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <div class="flex-grow-1 ml-3">
+                                    Vanessa Tucker
+                                    <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                                </div>
+                            </div>
+                        </a><a href="#" class="list-group-item list-group-item-action border-0">
+                            <div class="badge bg-success float-right">5</div>
+                            <div class="d-flex align-items-start">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                    class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <div class="flex-grow-1 ml-3">
+                                    Vanessa Tucker
+                                    <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                                </div>
+                            </div>
+                        </a><a href="#" class="list-group-item list-group-item-action border-0">
+                            <div class="badge bg-success float-right">5</div>
+                            <div class="d-flex align-items-start">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                    class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <div class="flex-grow-1 ml-3">
+                                    Vanessa Tucker
+                                    <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                                </div>
+                            </div>
+                        </a><a href="#" class="list-group-item list-group-item-action border-0">
+                            <div class="badge bg-success float-right">5</div>
+                            <div class="d-flex align-items-start">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                    class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <div class="flex-grow-1 ml-3">
+                                    Vanessa Tucker
+                                    <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                                </div>
+                            </div>
+                        </a><a href="#" class="list-group-item list-group-item-action border-0">
+                            <div class="badge bg-success float-right">5</div>
+                            <div class="d-flex align-items-start">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                    class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <div class="flex-grow-1 ml-3">
+                                    Vanessa Tucker
+                                    <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                                </div>
+                            </div>
+                        </a><a href="#" class="list-group-item list-group-item-action border-0">
+                            <div class="badge bg-success float-right">5</div>
+                            <div class="d-flex align-items-start">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                    class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <div class="flex-grow-1 ml-3">
+                                    Vanessa Tucker
+                                    <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                                </div>
+                            </div>
+                        </a><a href="#" class="list-group-item list-group-item-action border-0">
                             <div class="badge bg-success float-right">5</div>
                             <div class="d-flex align-items-start">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
@@ -203,7 +270,7 @@
                             </div>
                         </div>
                         <div class="position-relative">
-                            <div class="chat-messages p-4">
+                            <div class="chat-messages p-4" id="chatbox">
                                 <div class="chat-message-right pb-4">
                                     <div>
                                         <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
@@ -345,8 +412,9 @@
                         </div>
                         <div class="flex-grow-0 py-3 px-4 border-top">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type your message">
-                                <button class="btn btn-primary">Send</button>
+                                <input type="text" class="form-control" id="sendmessage"
+                                    placeholder="Type your message">
+                                <button class="btn btn-primary" id="send">Send</button>
                             </div>
                         </div>
                     </div>
@@ -357,7 +425,56 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
+        var chatbox = document.getElementById("chatbox");
+        var send = document.getElementById("send");
 
+
+        send.onclick = function () {
+            var sendmessage = document.getElementById("sendmessage").value;
+            var timestamp = new Date();
+            showmessage(0, sendmessage, timestamp);//0 for me, 1 for the contact
+            //sendmessage(sendmessage, timestamp);
+        }
+
+        function clearchatbox() {
+            chatbox.innerHTML = "";
+        }
+        function showmessage(sender, message, timestamp) {
+            //sender 0 for me, 1 for the contact
+            if (sender) {
+                alert("hi");
+            } else {
+                var newmessage = document.createElement("div");
+                newmessage.className = "chat-message-right mb-4";
+                var info = document.createElement("div");
+
+                var avatar = document.createElement("img");
+                avatar.className = "rounded-circle mr-1";
+                avatar.width = "40";
+                avatar.height = "40";
+                avatar.src = "https://bootdey.com/img/Content/avatar/avatar1.png";
+                info.appendChild(avatar);
+
+                var time = document.createElement("div");
+                time.className = "text-muted small text-nowrap mt-2";
+                time.innerHTML = timestamp.getHours() + ":" + timestamp.getMinutes();
+                info.appendChild(time);
+
+                newmessage.appendChild(info);
+
+                var content = document.createElement("div");
+                content.className = "flex-shrink-1 bg-light rounded py-2 px-3 mr-3";
+                var sender = document.createElement("div");
+                sender.className = "font-weight-bold mb-1";
+                sender.innerHTML = "You";
+                content.appendChild(sender);
+                content.innerHTML += message;
+
+                newmessage.appendChild(content);
+
+                chatbox.appendChild(newmessage);
+            }
+        }
     </script>
 </body>
 
