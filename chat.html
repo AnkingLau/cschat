@@ -434,6 +434,7 @@
             var timestamp = new Date();
             showmessage(0, sendmessage, timestamp);//0 for me, 1 for the contact
             //sendmessage(sendmessage, timestamp);
+            document.getElementById("sendmessage").value = "";
         }
 
         function clearchatbox() {
@@ -474,6 +475,7 @@
 
                 chatbox.appendChild(newmessage);
             }
+            chatbox.scroll({ top: chatbox.scrollHeight, behavior: 'smooth' });
         }
     </script>
 </body>
