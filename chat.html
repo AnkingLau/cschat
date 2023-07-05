@@ -96,7 +96,8 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="list-group-item list-group-item-action border-0" id="000001" onclick="selectContact(this.id);">
+                        <a href="#" class="list-group-item list-group-item-action border-0" id="000001"
+                            onclick="selectContact(this.id);">
                             <div class="badge bg-success float-right" id="newmessagecount">5</div>
                             <div class="d-flex align-items-start">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
@@ -240,17 +241,35 @@
     </main>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/vendor/cryptico/jsbn.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/vendor/cryptico/random.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/vendor/cryptico/hash.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/vendor/cryptico/rsa.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/vendor/cryptico/aes.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/vendor/cryptico/api.js"></script>
     <script type="text/javascript">
         var chatbox = document.getElementById("chatbox");
         var send = document.getElementById("send");
-
-
+        // test only
+        var myKey = cryptico.generateRSAKey("mypassword", 1024); // using plaintext password to generate rsa key
+        var publicKey = cryptico.publicKeyString(rsaKey);
+        // end test only
         send.onclick = function () {
             var sendmessage = document.getElementById("sendmessage").value;
             var timestamp = new Date();
             showMessage(0, sendmessage, timestamp);//0 for me, 1 for the contact
             //sendmessage(sendmessage, timestamp);
             document.getElementById("sendmessage").value = "";
+        }
+
+        function encryptMessage(plaintext) {
+            var ciphertext = cryptico.encrypt(plaintext, publicKey).cipher;
+            return ciphertext;
+        }
+
+        function decryptMessage(ciphertext) {
+            var plaintext = cryptico.decrypt(ciphertext, rsaKey);
+            return plaintext;
         }
 
         function clearChatbox() {
@@ -294,6 +313,7 @@
             newmessage.appendChild(content);
 
             chatbox.appendChild(newmessage);
+
             chatbox.scroll({ top: chatbox.scrollHeight, behavior: 'smooth' });
         }
     </script>
