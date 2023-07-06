@@ -229,8 +229,7 @@
                         </div>
                         <div class="flex-grow-0 py-3 px-4 border-top">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="sendmessage"
-                                    placeholder="Type your message">
+                                <input type="text" class="form-control" id="myMessage" placeholder="Type your message">
                                 <button class="btn btn-primary" id="send">Send</button>
                             </div>
                         </div>
@@ -252,14 +251,15 @@
         var send = document.getElementById("send");
         // test only
         var myKey = cryptico.generateRSAKey("mypassword", 1024); // using plaintext password to generate rsa key
-        var publicKey = cryptico.publicKeyString(rsaKey);
+        var publicKey = cryptico.publicKeyString(myKey);
         // end test only
         send.onclick = function () {
-            var sendmessage = document.getElementById("sendmessage").value;
+            var plaintext = document.getElementById("myMessage").value;
             var timestamp = new Date();
-            showMessage(0, sendmessage, timestamp);//0 for me, 1 for the contact
-            //sendmessage(sendmessage, timestamp);
-            document.getElementById("sendmessage").value = "";
+            showMessage(0, plaintext, timestamp);//0 for me, 1 for the contact
+            var ciphertext = encryptMessage(plaintext);
+            //upload(ciphertext, timestamp);
+            document.getElementById("myMessage").value = "";
         }
 
         function encryptMessage(plaintext) {
@@ -308,13 +308,27 @@
             people.className = "font-weight-bold mb-1";
             people.innerHTML = sender ? "the contact" : "You";
             content.appendChild(people);
-            content.innerHTML += message;
+            content.innerHTML += escapeHTML(message);
 
             newmessage.appendChild(content);
 
             chatbox.appendChild(newmessage);
 
             chatbox.scroll({ top: chatbox.scrollHeight, behavior: 'smooth' });
+        }
+
+        function escapeHTML(str) {
+            return str.replace(
+                /[&<>'"]/g,
+                tag =>
+                ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
         }
     </script>
 </body>
